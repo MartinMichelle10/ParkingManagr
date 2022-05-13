@@ -1,0 +1,68 @@
+import { Injectable, Inject } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { getConnection, Repository } from 'typeorm';
+import { Car } from './car.entity';
+
+import { Employees } from './../employees/employees.entity';
+
+@Injectable()
+export class CarService {
+  constructor(
+    @InjectRepository(Car)
+    private carRepository: Repository<Car>,
+  ) {}
+
+  async getCars(): Promise<Car[]> {
+    return await this.carRepository
+      .createQueryBuilder('car')
+      .innerJoinAndMapOne(
+        'car.employee',
+        Employees,
+        'employee',
+        'employee.id = car.EmployeeId',
+      )
+      .where('car.isDeleted = :isDeleted', { isDeleted: false })
+      .getMany();
+  }
+
+  async getCarByEmployeeId(_id: string): Promise<Car> {
+    return await this.carRepository.findOne({
+      select: ['id', 'Name', 'Model', 'Brand', 'employee', 'PlateNumber'],
+      where: [{ employee: _id }],
+    });
+  }
+
+  async createCar(car: Car) {
+    return await this.carRepository.save(car);
+  }
+
+  async deleteCar(_id: string) {
+    const deleteResponse = await getConnection()
+      .createQueryBuilder()
+      .update(Car)
+      .set({ isDeleted: true, deletedAt: new Date().toISOString() })
+      .where('id = :id', { id: _id })
+      .execute();
+
+    if (!deleteResponse.affected) {
+      throw new Error('Car is not deleted !');
+    }
+
+    return 'Car deleted successfully';
+  }
+
+  async updateCar(_id: string, car: Car) {
+    const updateResponse = await getConnection()
+      .createQueryBuilder()
+      .update(Car)
+      .set({ ...car, updatedAt: new Date().toISOString() })
+      .where('id = :id', { id: _id })
+      .execute();
+
+    if (!updateResponse.affected) {
+      throw new Error('Car is not updated !');
+    }
+
+    return 'Car deleted successfully';
+  }
+}

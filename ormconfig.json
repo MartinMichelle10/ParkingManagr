@@ -1,0 +1,10 @@
+{
+    "type": "mysql",
+    "host": "db-mysql-ams3-86254-do-user-11458908-0.b.db.ondigitalocean.com",
+    "port": 25060,
+    "username": "martin",
+    "password": "AVNS_VsKM2Ancf0TPuHN",
+    "database": "Parking",
+    "entities": ["dist/**/*.entity.js"],
+    "synchronize": true
+  }
