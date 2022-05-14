@@ -1,5 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import {
+  AccessCardTransactions,
+  relatedTypes,
+  transactionTypes,
+} from 'src/access-card-transactions/access-card-transactions.entity';
 import { Connection, getConnection, Repository } from 'typeorm';
 
 import { Car } from './../car/car.entity';
@@ -40,6 +45,7 @@ export class AccessCardsService {
     await queryRunner.startTransaction();
 
     try {
+      // Step [1] - Get card data and check if exists on the system
       const cardData = await queryRunner.manager.findOne(AccessCards, {
         isDeleted: false,
         CarId: card.CarId,
@@ -50,7 +56,20 @@ export class AccessCardsService {
         throw new Error('Access card for this car and highway is exists');
       }
 
-      const newCard = await queryRunner.manager.save(AccessCards, card);
+      // Step [2] - Insert new access card in the database
+      // and add welcome balance 10 USD
+      const newCard = await queryRunner.manager.save(AccessCards, {
+        ...card,
+        Balance: 10,
+      });
+
+      // Step [3] - add transaction log for this process
+      await queryRunner.manager.save(AccessCardTransactions, {
+        TransactionType: transactionTypes.DEPOSIT,
+        RelatedType: relatedTypes.WELCOME,
+        Amount: 10,
+        AccessCardId: newCard.id,
+      });
 
       await queryRunner.commitTransaction();
       await queryRunner.release();

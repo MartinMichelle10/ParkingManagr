@@ -5,6 +5,11 @@ import { HighwayPassingMovements } from './highway-passing-movements.entity';
 import { AccessCards } from 'src/access-cards/access-cards.entity';
 import { Highways } from 'src/highways/highways.entity';
 import { CreateMovementDto } from './dto/create.movement.dto';
+import {
+  AccessCardTransactions,
+  transactionTypes,
+  relatedTypes,
+} from 'src/access-card-transactions/access-card-transactions.entity';
 
 @Injectable()
 export class HighwayPassingMovementsService {
@@ -95,6 +100,15 @@ export class HighwayPassingMovementsService {
           throw new Error('Card Balance is not updated !');
         }
       }
+
+      // Step [6] - add transaction log for this process
+      await queryRunner.manager.save(AccessCardTransactions, {
+        TransactionType: transactionTypes.WITHDRAW,
+        RelatedType: relatedTypes.PASSING,
+        Amount: passFee,
+        AccessCardId: cardData.id,
+        passingHightWayId: newMove.id,
+      });
 
       await queryRunner.commitTransaction();
       await queryRunner.release();

@@ -7,6 +7,7 @@ import { CarModule } from './car/car.module';
 import { HighwaysModule } from './highways/highways.module';
 import { AccessCardsModule } from './access-cards/access-cards.module';
 import { HighwayPassingMovementsModule } from './highway-passing-movements/highway-passing-movements.module';
+import { AccessCardTransactionsModule } from './access-card-transactions/access-card-transactions.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { HighwayPassingMovementsModule } from './highway-passing-movements/highw
     HighwaysModule,
     AccessCardsModule,
     HighwayPassingMovementsModule,
+    AccessCardTransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -9,7 +9,9 @@ describe('HighwayPassingMovementsController', () => {
       controllers: [HighwayPassingMovementsController],
     }).compile();
 
-    controller = module.get<HighwayPassingMovementsController>(HighwayPassingMovementsController);
+    controller = module.get<HighwayPassingMovementsController>(
+      HighwayPassingMovementsController,
+    );
   });
 
   it('should be defined', () => {

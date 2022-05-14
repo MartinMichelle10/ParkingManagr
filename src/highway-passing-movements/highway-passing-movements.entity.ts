@@ -12,6 +12,8 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { AccessCards } from 'src/access-cards/access-cards.entity';
 
+import { AccessCardTransactions } from 'src/access-card-transactions/access-card-transactions.entity';
+
 @Entity('HighwayPassingMovements')
 export class HighwayPassingMovements {
   @ApiProperty()
@@ -37,4 +39,10 @@ export class HighwayPassingMovements {
   @ApiProperty()
   @Column()
   AccessCardId: string;
+
+  @OneToMany(
+    () => AccessCardTransactions,
+    (accessCardTransactions) => accessCardTransactions.highwayMovements,
+  )
+  accessCardTransactions: AccessCardTransactions[];
 }
