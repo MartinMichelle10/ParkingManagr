@@ -9,7 +9,9 @@ describe('AccessCardTransactionsController', () => {
       controllers: [AccessCardTransactionsController],
     }).compile();
 
-    controller = module.get<AccessCardTransactionsController>(AccessCardTransactionsController);
+    controller = module.get<AccessCardTransactionsController>(
+      AccessCardTransactionsController,
+    );
   });
 
   it('should be defined', () => {

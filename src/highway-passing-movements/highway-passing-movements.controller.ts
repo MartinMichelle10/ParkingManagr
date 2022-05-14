@@ -12,9 +12,14 @@ import {
 
 import { HighwayPassingMovementsService } from './highway-passing-movements.service';
 
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { HighwayPassingMovements } from './highway-passing-movements.entity';
-import { CreateMovementDto } from './dto/create.movement.dto';
+import { CreateMovementDto, RemainingBalance } from './dto/create.movement.dto';
 import { GlobalExceptionFilter } from 'src/global-exception.filter';
 
 @Controller('highway-passing-movements')
@@ -24,13 +29,19 @@ export class HighwayPassingMovementsController {
 
   @Get()
   @ApiOkResponse({ type: [HighwayPassingMovementsService] })
-  getAllAccessCards() {
+  @ApiOperation({
+    summary: 'List passing through highway gate. ',
+  })
+  listHighwayPassingMovements() {
     return this.service.listHighwayPassingMovements();
   }
 
   @Post()
   @UseFilters(new GlobalExceptionFilter())
-  @ApiCreatedResponse({ type: HighwayPassingMovements })
+  @ApiCreatedResponse({ type: RemainingBalance })
+  @ApiOperation({
+    summary: 'API for simulates passing through the highway gate (by car ID)',
+  })
   create(@Body() createMovementDto: CreateMovementDto) {
     return this.service.createMovement(createMovementDto);
   }

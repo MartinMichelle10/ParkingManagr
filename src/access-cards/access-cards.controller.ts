@@ -12,7 +12,12 @@ import {
 
 import { AccessCardsService } from './access-cards.service';
 
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { AccessCards } from './access-cards.entity';
 import { CreateAccessCardDto } from './dto/create.card.dto';
@@ -25,6 +30,7 @@ export class AccessCardsController {
 
   @Get()
   @ApiOkResponse({ type: [AccessCards] })
+  @ApiOperation({ summary: 'List all access cards for all employees' })
   getAllAccessCards() {
     return this.service.getAccessCards();
   }
@@ -32,12 +38,18 @@ export class AccessCardsController {
   @Post()
   @UseFilters(new GlobalExceptionFilter())
   @ApiCreatedResponse({ type: AccessCards })
+  @ApiOperation({
+    summary: 'Register a car in the highway and creates it’s access card',
+  })
   create(@Body() createAccessCardDto: CreateAccessCardDto) {
     return this.service.createAccessCard(createAccessCardDto);
   }
 
   @Delete(':id')
   @UseFilters(new GlobalExceptionFilter())
+  @ApiOperation({
+    summary: 'Delete access card',
+  })
   delete(@Param('id') id: string) {
     return this.service.deleteAccessCard(id);
   }

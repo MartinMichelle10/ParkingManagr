@@ -17,3 +17,8 @@ export class CreateMovementDto {
   accessCard: AccessCards;
   AccessCardId: string;
 }
+
+export class RemainingBalance {
+  @ApiProperty()
+  RemainingBalance: number;
+}

@@ -10,7 +10,12 @@ import {
 
 import { HighwaysService } from './highways.service';
 
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { Highways } from './highways.entity';
 
@@ -20,12 +25,18 @@ export class HighwaysController {
   constructor(private service: HighwaysService) {}
 
   @Get()
+  @ApiOperation({
+    summary: 'List Highways Roads. ',
+  })
   @ApiOkResponse({ type: [Highways] })
   getAllEmployees() {
     return this.service.getHighways();
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Get Highway by id. ',
+  })
   @ApiOkResponse({ type: Highways })
   findOne(@Param('id') id: string) {
     return this.service.getHighwayById(id);

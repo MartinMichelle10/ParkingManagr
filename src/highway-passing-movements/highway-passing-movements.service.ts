@@ -113,7 +113,10 @@ export class HighwayPassingMovementsService {
       await queryRunner.commitTransaction();
       await queryRunner.release();
 
-      return newMove;
+      return {
+        ...newMove,
+        RemainingBalance: cardData.Balance - highwayData.Fee,
+      };
     } catch (err) {
       await queryRunner.rollbackTransaction();
       await queryRunner.release();

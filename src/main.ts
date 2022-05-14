@@ -6,12 +6,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('NestJS Swagger')
+    .setTitle('Parking Manager API')
     .setDescription('API description')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('swagger', app, document, {
+    swaggerOptions: { defaultModelsExpandDepth: -1 },
+  });
 
   await app.listen(3000);
 }

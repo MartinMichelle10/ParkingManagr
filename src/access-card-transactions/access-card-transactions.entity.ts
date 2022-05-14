@@ -41,7 +41,7 @@ export class AccessCardTransactions {
     enum: relatedTypes,
     default: relatedTypes.PASSING,
   })
-  RelatedTypes: relatedTypes;
+  RelatedType: relatedTypes;
 
   @ApiProperty({ required: false, nullable: false })
   @Column({ type: 'numeric', precision: 10, scale: 2, default: () => 0 })
@@ -68,10 +68,10 @@ export class AccessCardTransactions {
   highwayMovements: HighwayPassingMovements;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   AccessCardId: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   passingHightWayId: string;
 }

@@ -12,7 +12,12 @@ import { ParseUUIDPipe } from '@nestjs/common/pipes/parse-uuid.pipe';
 
 import { EmployeesService } from './employees.service';
 
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { Employees } from './employees.entity';
 
@@ -25,12 +30,18 @@ export class EmployeesController {
 
   @Get()
   @ApiOkResponse({ type: [Employees] })
+  @ApiOperation({
+    summary: 'List Employees. ',
+  })
   getAllEmployees() {
     return this.service.getEmployees();
   }
 
   @Get(':id')
   @ApiOkResponse({ type: Employees })
+  @ApiOperation({
+    summary: 'Get Employee by ID. ',
+  })
   findOne(@Param('id') id: string) {
     return this.service.getEmployeesById(id);
   }

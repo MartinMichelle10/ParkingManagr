@@ -5,6 +5,8 @@ import { Car } from './car.entity';
 
 import { Employees } from './../employees/employees.entity';
 
+import { AccessCards } from 'src/access-cards/access-cards.entity';
+
 @Injectable()
 export class CarService {
   constructor(
@@ -21,18 +23,56 @@ export class CarService {
         'employee',
         'employee.id = car.EmployeeId',
       )
+      .leftJoinAndMapOne(
+        'car.accessCards',
+        AccessCards,
+        'accessCards',
+        'accessCards.carId = car.id',
+      )
       .where('car.isDeleted = :isDeleted', { isDeleted: false })
       .getMany();
   }
 
-  async getCarByEmployeeId(_id: string): Promise<Car> {
-    return await this.carRepository.findOne({
-      select: ['id', 'Name', 'Model', 'Brand', 'employee', 'PlateNumber'],
-      where: [{ employee: _id }],
-    });
+  async getCarByEmployeeId(_id: string): Promise<Car[]> {
+    return await this.carRepository
+      .createQueryBuilder('car')
+      .innerJoinAndMapOne(
+        'car.employee',
+        Employees,
+        'employee',
+        'employee.id = car.EmployeeId',
+      )
+      .leftJoinAndMapOne(
+        'car.accessCards',
+        AccessCards,
+        'accessCards',
+        'accessCards.carId = car.id',
+      )
+      .where('car.isDeleted = :isDeleted AND car.EmployeeId= :EmployeeId', {
+        isDeleted: false,
+        EmployeeId: _id,
+      })
+      .getMany();
   }
 
   async createCar(car: Car) {
+    const carData = await this.carRepository.findOne({
+      select: [
+        'id',
+        'Name',
+        'Model',
+        'Brand',
+        'employee',
+        'PlateNumber',
+        'accessCards',
+      ],
+      where: [{ PlateNumber: car.PlateNumber, isDeleted: false }],
+    });
+
+    if (carData) {
+      throw new Error('This Car already exists on our system');
+    }
+
     return await this.carRepository.save(car);
   }
 

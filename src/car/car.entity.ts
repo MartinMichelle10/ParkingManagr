@@ -15,7 +15,6 @@ import { Employees } from '../employees/employees.entity';
 import { AccessCards } from '../access-cards/access-cards.entity';
 
 @Entity('Car')
-@Unique(['PlateNumber'])
 export class Car {
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')

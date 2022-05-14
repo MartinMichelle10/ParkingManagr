@@ -64,12 +64,17 @@ export class AccessCardsService {
       });
 
       // Step [3] - add transaction log for this process
-      await queryRunner.manager.save(AccessCardTransactions, {
-        TransactionType: transactionTypes.DEPOSIT,
-        RelatedType: relatedTypes.WELCOME,
-        Amount: 10,
-        AccessCardId: newCard.id,
-      });
+      const transaction = await queryRunner.manager.save(
+        AccessCardTransactions,
+        {
+          TransactionType: transactionTypes.DEPOSIT,
+          RelatedType: relatedTypes.WELCOME,
+          Amount: 10,
+          AccessCardId: newCard.id,
+        },
+      );
+
+      console.log(transaction);
 
       await queryRunner.commitTransaction();
       await queryRunner.release();

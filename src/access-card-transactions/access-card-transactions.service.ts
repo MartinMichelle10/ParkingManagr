@@ -30,4 +30,27 @@ export class AccessCardTransactionsService {
       )
       .getMany();
   }
+
+  async getAccessCardTransactions(
+    _id: string,
+  ): Promise<AccessCardTransactions[]> {
+    return await this.transactionsRepository
+      .createQueryBuilder('accessCardTransactions')
+      .leftJoinAndMapOne(
+        'accessCardTransactions.highwayMovements',
+        HighwayPassingMovements,
+        'highwayPassingMovements',
+        'highwayPassingMovements.id = accessCardTransactions.passingHightWayId',
+      )
+      .leftJoinAndMapOne(
+        'accessCardTransactions.accessCard',
+        AccessCards,
+        'accessCards',
+        'accessCards.id = accessCardTransactions.AccessCardId',
+      )
+      .where('accessCardTransactions.AccessCardId = :AccessCardId', {
+        AccessCardId: _id,
+      })
+      .getMany();
+  }
 }
