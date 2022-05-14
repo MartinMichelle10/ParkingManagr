@@ -14,13 +14,9 @@ import { CarService } from './car.service';
 
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
-import { QueryFailedError } from 'typeorm';
-import { EntityNotFoundError } from 'typeorm/error/EntityNotFoundError';
-
 import { Car } from './car.entity';
 
 import { CreateCarDto } from './dto//create.car.dto';
-import { HttpExceptionFilter } from 'src/http-exception.filter';
 import { GlobalExceptionFilter } from 'src/global-exception.filter';
 import { UpdateCarDto } from './dto/update.car.dto';
 

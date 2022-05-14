@@ -6,10 +6,13 @@ import {
   ManyToOne,
   JoinColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 import { Employees } from '../employees/employees.entity';
+
+import { AccessCards } from '../access-cards/access-cards.entity';
 
 @Entity('Car')
 @Unique(['PlateNumber'])
@@ -52,4 +55,7 @@ export class Car {
   @ApiProperty()
   @Column()
   EmployeeId: string;
+
+  @OneToMany(() => AccessCards, (accessCards) => accessCards.car)
+  accessCards: AccessCards[];
 }

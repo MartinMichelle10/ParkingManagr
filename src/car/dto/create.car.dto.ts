@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
+import { AccessCards } from 'src/access-cards/access-cards.entity';
 import { Employees } from 'src/employees/employees.entity';
 
 export class CreateCarDto {
@@ -22,6 +23,8 @@ export class CreateCarDto {
   createdAt: Date;
   updatedAt: Date;
   id: string;
+  @Exclude()
+  accessCards: AccessCards[];
   employee: Employees;
   isDeleted: boolean;
   deletedAt: Date;
