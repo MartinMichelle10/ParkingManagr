@@ -31,9 +31,12 @@ export class GlobalExceptionFilter implements ExceptionFilter {
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
 
+    console.log(exception.constructor);
+
     switch (exception.constructor) {
       case HttpException:
         status = (exception as HttpException).getStatus();
+        message = (exception as HttpException).message;
         break;
       case QueryFailedError: // this is a TypeOrm error
         status = HttpStatus.UNPROCESSABLE_ENTITY;
@@ -55,6 +58,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         break;
       default:
         status = HttpStatus.INTERNAL_SERVER_ERROR;
+        message = (exception as any).message;
     }
 
     response

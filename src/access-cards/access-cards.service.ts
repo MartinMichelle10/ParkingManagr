@@ -40,6 +40,16 @@ export class AccessCardsService {
     await queryRunner.startTransaction();
 
     try {
+      const cardData = await queryRunner.manager.findOne(AccessCards, {
+        isDeleted: false,
+        CarId: card.CarId,
+        HighwayId: card.HighwayId,
+      });
+
+      if (cardData) {
+        throw new Error('Access card for this car and highway is exists');
+      }
+
       const newCard = await queryRunner.manager.save(AccessCards, card);
 
       await queryRunner.commitTransaction();
@@ -51,5 +61,20 @@ export class AccessCardsService {
       await queryRunner.release();
       throw err;
     }
+  }
+
+  async deleteAccessCard(_id: string) {
+    const deleteResponse = await getConnection()
+      .createQueryBuilder()
+      .update(AccessCards)
+      .set({ isDeleted: true, deletedAt: new Date().toISOString() })
+      .where('id = :id', { id: _id })
+      .execute();
+
+    if (!deleteResponse.affected) {
+      throw new Error('Card is not deleted !');
+    }
+
+    return 'Card deleted successfully';
   }
 }

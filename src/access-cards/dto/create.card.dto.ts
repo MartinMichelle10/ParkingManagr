@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { Car } from 'src/car/car.entity';
 import { Highways } from 'src/highways/highways.entity';
-
+import { HighwayPassingMovements } from 'src/highway-passing-movements/highway-passing-movements.entity';
 export class CreateAccessCardDto {
   @ApiProperty()
   CarId: string;
@@ -23,4 +23,5 @@ export class CreateAccessCardDto {
   car: Car;
   highway: Highways;
   Balance: number;
+  highwayPassingMovements: HighwayPassingMovements[];
 }

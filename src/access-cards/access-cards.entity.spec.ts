@@ -1,7 +1,7 @@
-import { AccessCardsEntity } from './access-cards.entity';
+import { AccessCards } from './access-cards.entity';
 
 describe('AccessCardsEntity', () => {
   it('should be defined', () => {
-    expect(new AccessCardsEntity()).toBeDefined();
+    expect(new AccessCards()).toBeDefined();
   });
 });

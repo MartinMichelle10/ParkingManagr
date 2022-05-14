@@ -6,6 +6,7 @@ import {
   ManyToOne,
   JoinColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -13,14 +14,14 @@ import { Car } from '../car/car.entity';
 
 import { Highways } from '../highways/highways.entity';
 
+import { HighwayPassingMovements } from '../highway-passing-movements/highway-passing-movements.entity';
+
 @Entity('AccessCards')
-@Unique(['CarId', 'HighwayId'])
 export class AccessCards {
   @ApiProperty()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ApiProperty({ required: false, nullable: true })
   @Column({ length: 25 })
   Name: string;
 
@@ -31,8 +32,10 @@ export class AccessCards {
   @Column({ default: () => 'NOW()' })
   createdAt: Date;
 
+  @Column({ nullable: true })
   lastChargeDate: Date;
 
+  @Column({ nullable: true })
   updatedAt: Date;
 
   @Column({ default: () => false })
@@ -56,4 +59,10 @@ export class AccessCards {
   @ApiProperty()
   @Column()
   HighwayId: string;
+
+  @OneToMany(
+    () => HighwayPassingMovements,
+    (highwayPassingMovements) => highwayPassingMovements.accessCard,
+  )
+  highwayPassingMovements: HighwayPassingMovements[];
 }

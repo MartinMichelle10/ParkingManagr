@@ -35,4 +35,10 @@ export class AccessCardsController {
   create(@Body() createAccessCardDto: CreateAccessCardDto) {
     return this.service.createAccessCard(createAccessCardDto);
   }
+
+  @Delete(':id')
+  @UseFilters(new GlobalExceptionFilter())
+  delete(@Param('id') id: string) {
+    return this.service.deleteAccessCard(id);
+  }
 }
