@@ -4,7 +4,10 @@ import { AccessCards } from 'src/access-cards/access-cards.entity';
 
 export class CreateMovementDto {
   @ApiProperty()
-  AccessCardId: string;
+  CarId: string;
+
+  @ApiProperty()
+  HighwayId: string;
 
   @Exclude()
   createdAt: Date;
@@ -12,4 +15,5 @@ export class CreateMovementDto {
   id: string;
   passFee: number;
   accessCard: AccessCards;
+  AccessCardId: string;
 }

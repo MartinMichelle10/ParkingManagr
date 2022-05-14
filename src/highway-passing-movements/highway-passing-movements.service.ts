@@ -4,6 +4,7 @@ import { Connection, getConnection, Repository } from 'typeorm';
 import { HighwayPassingMovements } from './highway-passing-movements.entity';
 import { AccessCards } from 'src/access-cards/access-cards.entity';
 import { Highways } from 'src/highways/highways.entity';
+import { CreateMovementDto } from './dto/create.movement.dto';
 
 @Injectable()
 export class HighwayPassingMovementsService {
@@ -25,22 +26,26 @@ export class HighwayPassingMovementsService {
       .getMany();
   }
 
-  async createMovement(move: HighwayPassingMovements) {
+  async createMovement(movement: CreateMovementDto) {
+    // Start transaction, If any error occurs rollback changes
     const queryRunner = this.connection.createQueryRunner();
 
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
     try {
+      // Step [1] - Get access card data of the car and highway
       const cardData = await queryRunner.manager.findOne(AccessCards, {
         isDeleted: false,
-        id: move.AccessCardId,
+        CarId: movement.CarId,
+        HighwayId: movement.HighwayId,
       });
 
       if (!cardData) {
         throw new Error('Access card is not exists');
       }
 
+      // Step [2] - Get highway data and fee amount to go through highway
       const highwayData = await queryRunner.manager.findOne(Highways, {
         isDeleted: false,
         id: cardData.HighwayId,
@@ -50,22 +55,30 @@ export class HighwayPassingMovementsService {
         throw new Error('Highway is not exists');
       }
 
+      // Step [3] - Check If the car passes through the highway gate 2 times within 1 minute the we only
+      // charge the card one (second pass is free)
+
       const currentDate: any = new Date();
+
       const lastChargeDate: any = new Date(cardData.lastChargeDate);
 
       const timeDiffPass =
-        Math.abs(currentDate - lastChargeDate) / 1000 / 60 > 2;
+        Math.round(Math.abs(currentDate - lastChargeDate) / 1000 / 60) >= 1;
 
-      console.log(
-        timeDiffPass,
-        Math.abs(currentDate - lastChargeDate) / 1000 / 60,
-      );
+      const passFee = timeDiffPass ? highwayData.Fee : 0;
 
+      // Step [4] - Save movement
       const newMove = await queryRunner.manager.save(HighwayPassingMovements, {
-        ...move,
-        passFee: timeDiffPass ? highwayData.Fee : 0,
+        AccessCardId: cardData.id,
+        passFee,
       });
 
+      // Throw Error if Pass Fee greater than balance in the access card
+      if (passFee > cardData.Balance) {
+        throw new Error('Insufficient funds in this card !');
+      }
+
+      // Step [5] - Update card balance
       if (timeDiffPass) {
         const updateCardBalance = await queryRunner.manager
           .createQueryBuilder()
