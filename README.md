@@ -1,6 +1,8 @@
 ## Description
 
-API for managing Employee's cars and organizing traffic to Parking and Highway gates.
+**API for managing Employee's cars and organizing traffic to Parking and Highway gates.**
+
+it is my first time working with NestJs framework, I'm really happy to get this opportunity :) 
 
 ## Installation
 
@@ -37,4 +39,4 @@ http://localhost:3000/erd
  ### API 
  http://159.223.12.166:3000/api
  
-it is my first time working with NestJs framework, I'm really happy to get this opportunity :) 
+
