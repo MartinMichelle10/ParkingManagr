@@ -29,3 +29,10 @@ http://localhost:3000/api/
 ## ERD Diagram 
 
 http://localhost:3000/erd
+
+# Live check 
+ # ERD
+ http://159.223.12.166:3000/erd
+
+ # API 
+ http://159.223.12.166:3000/api
