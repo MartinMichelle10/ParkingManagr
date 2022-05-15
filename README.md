@@ -21,15 +21,11 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Swagger API docs 
 
-```bash
-# unit tests
-$ npm run test
+http://localhost:3000/api/
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
-```
+## ERD Diagram 
+
+http://localhost:3000/erd
