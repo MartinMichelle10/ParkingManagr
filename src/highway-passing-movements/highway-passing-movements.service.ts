@@ -47,7 +47,7 @@ export class HighwayPassingMovementsService {
       });
 
       if (!cardData) {
-        throw new Error('Access card is not exists');
+        throw new Error('Access card is not exists for this Car and Highway');
       }
 
       // Step [2] - Get highway data and fee amount to go through highway
@@ -115,7 +115,7 @@ export class HighwayPassingMovementsService {
 
       return {
         ...newMove,
-        RemainingBalance: cardData.Balance - highwayData.Fee,
+        RemainingBalance: cardData.Balance - passFee,
       };
     } catch (err) {
       await queryRunner.rollbackTransaction();

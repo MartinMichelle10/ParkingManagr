@@ -43,6 +43,8 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         message =
           (exception as any).code === 'ER_DUP_ENTRY'
             ? 'Sorry - Record Already Exist!'
+            : (exception as any).code === 'ER_NO_REFERENCED_ROW_2'
+            ? 'Sorry - You enter wrong data!'
             : (exception as QueryFailedError).message;
         code = (exception as any).code;
         break;
