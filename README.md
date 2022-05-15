@@ -31,8 +31,8 @@ http://localhost:3000/api/
 http://localhost:3000/erd
 
 # Live check 
- # ERD
+ ### ERD
  http://159.223.12.166:3000/erd
 
- # API 
+ ### API 
  http://159.223.12.166:3000/api
