@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AccessCards } from 'src/access-cards/access-cards.entity';
+import { AccessCards } from './../access-cards/access-cards.entity';
 import { AccessCardTransactionsService } from './access-card-transactions.service';
 import { AccessCardTransactions } from './access-card-transactions.entity';
-import { HighwayPassingMovements } from 'src/highway-passing-movements/highway-passing-movements.entity';
+import { HighwayPassingMovements } from './../highway-passing-movements/highway-passing-movements.entity';
 import { AccessCardTransactionsController } from './access-card-transactions.controller';
 
 @Module({

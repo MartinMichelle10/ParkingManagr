@@ -2,14 +2,14 @@ import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, getConnection, Repository } from 'typeorm';
 import { HighwayPassingMovements } from './highway-passing-movements.entity';
-import { AccessCards } from 'src/access-cards/access-cards.entity';
-import { Highways } from 'src/highways/highways.entity';
+import { AccessCards } from './../access-cards/access-cards.entity';
+import { Highways } from './../highways/highways.entity';
 import { CreateMovementDto } from './dto/create.movement.dto';
 import {
   AccessCardTransactions,
   transactionTypes,
   relatedTypes,
-} from 'src/access-card-transactions/access-card-transactions.entity';
+} from './../access-card-transactions/access-card-transactions.entity';
 
 @Injectable()
 export class HighwayPassingMovementsService {

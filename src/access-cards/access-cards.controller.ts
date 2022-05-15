@@ -21,7 +21,7 @@ import {
 
 import { AccessCards } from './access-cards.entity';
 import { CreateAccessCardDto } from './dto/create.card.dto';
-import { GlobalExceptionFilter } from 'src/global-exception.filter';
+import { GlobalExceptionFilter } from './../global-exception.filter';
 
 @Controller('access-cards')
 @ApiTags('Access Cards')

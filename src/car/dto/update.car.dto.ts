@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
-import { AccessCards } from 'src/access-cards/access-cards.entity';
-import { Employees } from 'src/employees/employees.entity';
+import { AccessCards } from './../../access-cards/access-cards.entity';
+import { Employees } from './../../employees/employees.entity';
 
 export class UpdateCarDto {
   @ApiProperty({ required: false, nullable: true })

@@ -22,7 +22,7 @@ import {
 import { Car } from './car.entity';
 
 import { CreateCarDto } from './dto//create.car.dto';
-import { GlobalExceptionFilter } from 'src/global-exception.filter';
+import { GlobalExceptionFilter } from './../global-exception.filter';
 import { UpdateCarDto } from './dto/update.car.dto';
 
 @Controller('car')

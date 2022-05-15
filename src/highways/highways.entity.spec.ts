@@ -1,7 +1,7 @@
-import { HighwaysEntity } from './highways.entity';
+import { Highways } from './highways.entity';
 
 describe('HighwaysEntity', () => {
   it('should be defined', () => {
-    expect(new HighwaysEntity()).toBeDefined();
+    expect(new Highways()).toBeDefined();
   });
 });

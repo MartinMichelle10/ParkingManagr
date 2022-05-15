@@ -5,7 +5,7 @@ import { Car } from './car.entity';
 
 import { Employees } from './../employees/employees.entity';
 
-import { AccessCards } from 'src/access-cards/access-cards.entity';
+import { AccessCards } from './../access-cards/access-cards.entity';
 
 @Injectable()
 export class CarService {

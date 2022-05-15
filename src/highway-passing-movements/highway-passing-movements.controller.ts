@@ -20,7 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { HighwayPassingMovements } from './highway-passing-movements.entity';
 import { CreateMovementDto, RemainingBalance } from './dto/create.movement.dto';
-import { GlobalExceptionFilter } from 'src/global-exception.filter';
+import { GlobalExceptionFilter } from './../global-exception.filter';
 
 @Controller('highway-passing-movements')
 @ApiTags('Passing through the highway gate (movements simulation)')

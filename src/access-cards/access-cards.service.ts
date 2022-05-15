@@ -4,7 +4,7 @@ import {
   AccessCardTransactions,
   relatedTypes,
   transactionTypes,
-} from 'src/access-card-transactions/access-card-transactions.entity';
+} from './../access-card-transactions/access-card-transactions.entity';
 import { Connection, getConnection, Repository } from 'typeorm';
 
 import { Car } from './../car/car.entity';

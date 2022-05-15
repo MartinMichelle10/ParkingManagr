@@ -10,9 +10,9 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-import { AccessCards } from 'src/access-cards/access-cards.entity';
+import { AccessCards } from './../access-cards/access-cards.entity';
 
-import { AccessCardTransactions } from 'src/access-card-transactions/access-card-transactions.entity';
+import { AccessCardTransactions } from './../access-card-transactions/access-card-transactions.entity';
 
 @Entity('HighwayPassingMovements')
 export class HighwayPassingMovements {

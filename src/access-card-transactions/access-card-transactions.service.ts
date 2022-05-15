@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AccessCards } from 'src/access-cards/access-cards.entity';
-import { HighwayPassingMovements } from 'src/highway-passing-movements/highway-passing-movements.entity';
+import { AccessCards } from './../access-cards/access-cards.entity';
+import { HighwayPassingMovements } from './../highway-passing-movements/highway-passing-movements.entity';
 import { Connection, getConnection, Repository } from 'typeorm';
 import { AccessCardTransactions } from './access-card-transactions.entity';
 

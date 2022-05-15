@@ -16,7 +16,7 @@ import { Car } from '../car/car.entity';
 import { Highways } from '../highways/highways.entity';
 
 import { HighwayPassingMovements } from '../highway-passing-movements/highway-passing-movements.entity';
-import { AccessCardTransactions } from 'src/access-card-transactions/access-card-transactions.entity';
+import { AccessCardTransactions } from './../access-card-transactions/access-card-transactions.entity';
 
 @Entity('AccessCards')
 export class AccessCards {
